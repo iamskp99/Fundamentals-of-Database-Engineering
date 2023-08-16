@@ -7,14 +7,16 @@
 5) To describe the table use \d table_name
 
 ### Alter a table by adding a new column and create 1 Million fields
-
+```
 ALTER TABLE transactionspractice 
 ADD COLUMN balance INT;
-
+```
 OR you can use this script
 
 ********************************************
 -- Create a test table
+
+```
 CREATE TABLE test_data (
     id SERIAL PRIMARY KEY,
     value INTEGER
@@ -27,6 +29,8 @@ FROM generate_series(1, 1000000);
 
 -- Check the number of rows
 SELECT count(*) FROM test_data;
+
+```
 ********************************************
 
 ### How Postgres deals with ACID Properties and Eventual consistency
