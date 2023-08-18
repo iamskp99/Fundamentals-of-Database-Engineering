@@ -11,7 +11,7 @@
 ALTER TABLE transactionspractice 
 ADD COLUMN balance INT;
 ```
-OR you can use this script
+AND you can use this script
 
 ********************************************
 -- Create a test table
@@ -33,5 +33,53 @@ SELECT count(*) FROM test_data;
 ```
 ********************************************
 
-### How Postgres deals with ACID Properties and Eventual consistency
+### Update particular rows and their fields
+
+```
+UPDATE taskfailurereason
+SET description = 'New description'
+WHERE reason_id = 123;
+
+```
+
+### For Dropping a column
+
+```
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+```
+
+### If you want how atomicity works
+
+If you want to know how atomicity works then you can play with trasactions
+
+```
+begin transaction;
+\\\ your query goes here 
+commit;
+```
+
+
+### What are different isolation levels
+
+
+![image](https://github.com/iamskp99/sql_practice/assets/42648568/d3a57111-8a41-4a08-84d8-2900484d6068)
+
+
+
+### Column based databases (What are they and why they are used in OLAP databases)
+
+
+
+
+
+
+
+
+
+
+
+### Difference between primary and secondary key
+
 
