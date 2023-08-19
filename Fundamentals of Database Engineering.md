@@ -50,6 +50,12 @@ DROP COLUMN column_name;
 
 ```
 
+### For making an index
+
+```
+CREATE INDEX index_name ON table_name (column_name);
+```
+
 ### If you want how atomicity works
 
 If you want to know how atomicity works then you can play with trasactions
@@ -70,16 +76,20 @@ commit;
 
 ### Column based databases (What are they and why they are used in OLAP databases)
 
+Example of how they are stored
 
+```
+1:1001, 2:1002, 3:1003, 4:1004, 5:1005......, 100:1100,
+Shashank:1001, Mayank:1002, Tushar:1003, Ritik:1004, Cool:1005......, Gaurav:1100,
+..............
+```
 
-
-
-
-
-
-
-
+They are stored like column_value:row_id
+Now, when we fetch try to fetch data for a single column , then only needed data will be fetched. Therefore less I/O
+operations will be needed.
 
 ### Difference between primary and secondary key
+
+All the keys in postgres are secondary key. Generally, the tables are index organized or they are called Index Organized table. In this case a primary key is used. For an index based on secondary key, we need to mantain an index. We can't use clustered based indexing.
 
 
