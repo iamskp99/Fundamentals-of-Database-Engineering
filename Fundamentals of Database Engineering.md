@@ -92,4 +92,14 @@ operations will be needed.
 
 All the keys in postgres are secondary key. Generally, the tables are index organized or they are called Index Organized table. In this case a primary key is used. For an index based on secondary key, we need to mantain an index. We can't use clustered based indexing.
 
+### Why can't we use just redis instead of bloom filters ?
+
+Let's consider a scenario where we want to see if a username exists in db or not then we can use redis to do direct lookup instead of using bloom filters
+
+Using Redis for this purpose provides a precise way to verify whether a username exists or not. 
+
+Bloom filters, on the other hand, might be used in situations where memory efficiency is more critical and where some level of approximation is acceptable. For example, in scenarios where you have a very large set of usernames and you want to quickly filter out obvious non-existent usernames before querying the database, a Bloom filter could be used. Keep in mind that using a Bloom filter in this case introduces the possibility of false positives, meaning the filter might incorrectly indicate that a username exists when it actually doesn't.
+
+
+
 
