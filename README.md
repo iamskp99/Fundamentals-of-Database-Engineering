@@ -56,6 +56,45 @@ DROP COLUMN column_name;
 CREATE INDEX index_name ON table_name (column_name);
 ```
 
+### Some SQL Funcs and their uses
+
+1. Getting second highest number
+
+```
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee WHERE salary NOT IN 
+(SELECT MAX(salary) FROM Employee);
+```
+
+2. Getting the Nth highest number
+
+```
+LIMIT IS USED TO limit the number the number of rows.
+OFFSET IS USED TO skip the number given to it
+
+REATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  SET N = N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT DISTINCT(salary) FROM Employee ORDER BY salary DESC LIMIT 1 OFFSET N
+  );
+END
+
+```
+
+3.  Getting the rank based on a column
+
+Here dense_rank, SUM, AVG all are examples of window functions and
+OVER is used for them to specify the parameter on which these functions
+will work.
+
+```
+SELECT score, dense_rank() OVER (ORDER BY score DESC) AS 'rank' FROM Scores;
+```
+
+
+
 ### If you want how atomicity works
 
 If you want to know how atomicity works then you can play with trasactions
