@@ -151,5 +151,13 @@ Using Redis for this purpose provides a precise way to verify whether a username
 Bloom filters, on the other hand, might be used in situations where memory efficiency is more critical and where some level of approximation is acceptable. For example, in scenarios where you have a very large set of usernames and you want to quickly filter out obvious non-existent usernames before querying the database, a Bloom filter could be used. Keep in mind that using a Bloom filter in this case introduces the possibility of false positives, meaning the filter might incorrectly indicate that a username exists when it actually doesn't.
 
 
+### Vertical vs Horizontal Partitioning
 
+Horizontal Partitioning : Suppose you have a table containing million rows so we can split that table into multiple table on the basis of id and we can save precious query time.
+Vertical Partitioning : Large column (blob) that you can store in a slow access drive in its own table space.
 
+### Horizontal Partitioning vs Sharding
+
+HP splits big table into smaller tables in the same database , client is not aware (agnostic).
+Sharding splits big table into multiple tables across multiple database servers. (This is used for distributed processing.) but the client is aware that it is hitting different servers.
+This is a big problem.
