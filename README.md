@@ -161,3 +161,20 @@ Vertical Partitioning : Large column (blob) that you can store in a slow access 
 HP splits big table into smaller tables in the same database , client is not aware (agnostic).
 Sharding splits big table into multiple tables across multiple database servers. (This is used for distributed processing.) but the client is aware that it is hitting different servers.
 This is a big problem.
+
+
+### Pros and Cons of Partitioning
+
+Pros
+
+1. Improves query performance when accessing a single partition.
+2. In sequential scan, it will come handy.
+3. It is easier to attach partition.
+4. Archive old data that are barely accessed into cheap storage.
+
+Cons
+
+1. Updates that move rows from a partition to another partition are slow or fail sometimes.
+2. Inefficient queries could accidently scan all the partition resulting in slower scans.
+3. Schema changes can be challenging.
+
