@@ -49,4 +49,11 @@ This will pull the image from docker-hub but it will not run it.
 
 ### To pass environment variable while running a docker container just insert an *-e* flag
 
+### Networking in docker
+
+<img width="1512" alt="Screenshot 2023-09-22 at 12 31 46 AM" src="https://github.com/iamskp99/Fundamentals-of-Database-Engineering/assets/42648568/43bb79b7-d2a5-4007-88ff-4aa0e2bf32d1">
+
+
+
+
 
