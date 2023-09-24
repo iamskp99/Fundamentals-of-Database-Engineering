@@ -11,6 +11,8 @@ So for example we are hitting www.google.com. Now, we know that its top level do
 for the domain name in it, it will then point to Auth NS, that server will give us our ip address. DNS doesn't use TCP , it uses UDP with query id and
 that makes it fast. Godaddy is a service that provides Auth Ns for your domain. 
 
+This architecture ensures some level of fault tolerance.
+
 ### I want to ask that suppose we have two servers, those two will have different ip address.
 ### Auth NS maps domain to server ip address, in this case which ip will it point to ?
 
