@@ -1,7 +1,0 @@
-Suppose you are asked to make a DNS system ?
-
-So the naive idea that comes to our mind is to keep a centralized database and index it , make partition ,shard it and many other things but the thing is our internet hosts billion of websites and
-it would take finite amount of time to run the query and get the ip address.
-
-
-So how does it currently work ?
