@@ -178,3 +178,29 @@ Cons
 2. Inefficient queries could accidently scan all the partition resulting in slower scans.
 3. Schema changes can be challenging.
 
+
+### How does sharding deals with atomic transactions ?
+
+```
+Sharding is a database partitioning technique used to improve scalability and performance in distributed database systems. It involves dividing a large database into smaller, more manageable pieces called shards, and each shard is stored on a separate database server. While sharding can significantly improve performance and distribute the workload, it introduces challenges when dealing with atomic transactions, as maintaining the integrity of transactions across multiple shards can be complex.
+
+Here's how sharding deals with atomic transactions:
+
+1. **Local Transactions:** In a sharded database, each shard operates as an independent database system, capable of handling local transactions within its own data. These local transactions are atomic within the boundaries of a single shard, meaning they ensure data consistency and integrity within that shard.
+
+2. **Distributed Transactions:** When a transaction involves data across multiple shards, it becomes a distributed transaction. Ensuring atomicity in distributed transactions is more challenging because you need to ensure that either all participating shards commit changes successfully, or none of them commit any changes at all (the "all-or-nothing" principle of atomicity).
+
+3. **Two-Phase Commit (2PC):** One common approach to handling distributed transactions in sharded databases is to use a protocol called the Two-Phase Commit (2PC). In the first phase, the coordinator (often the application server or a dedicated transaction manager) sends a "prepare" message to all shards involved in the transaction. Each shard then checks if it can successfully commit the transaction. If all shards can commit, they reply with a "ready" message. In the second phase, the coordinator sends a "commit" or "abort" message to all shards based on the responses received in the first phase.
+
+   - If all shards respond with "ready," the coordinator sends a "commit" message to all shards, and they proceed to commit the transaction.
+   - If any shard responds with "abort" or if the coordinator times out waiting for responses, the coordinator sends an "abort" message to all shards, and they roll back the transaction.
+
+4. **Challenges and Considerations:** While 2PC provides a way to achieve atomicity in distributed transactions, it has some drawbacks, such as performance overhead and the potential for blocking if a shard becomes unavailable. Alternative approaches like 3PC (Three-Phase Commit) and Paxos may be considered for more fault-tolerant and scalable solutions.
+
+5. **Isolation and Consistency:** Sharded databases also need to consider transaction isolation levels (e.g., READ COMMITTED, SERIALIZABLE) to ensure consistency across shards. Implementing these isolation levels in a distributed environment requires careful design and coordination.
+
+6. **Monitoring and Management:** Managing distributed transactions in a sharded database system requires robust monitoring and management tools to detect and handle issues like network failures, shard unavailability, and transaction timeouts.
+
+In summary, sharding can be a powerful technique for improving database scalability, but it introduces complexity when dealing with atomic transactions. To ensure atomicity in distributed transactions, protocols like 2PC are often used, but they come with their own challenges and trade-offs. Database administrators and developers must carefully design and manage the distributed transaction process to maintain data integrity and consistency in a sharded environment.
+
+```
