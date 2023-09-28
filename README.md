@@ -181,7 +181,7 @@ Cons
 
 ### How does sharding deals with atomic transactions ?
 
-```
+
 Sharding is a database partitioning technique used to improve scalability and performance in distributed database systems. It involves dividing a large database into smaller, more manageable pieces called shards, and each shard is stored on a separate database server. While sharding can significantly improve performance and distribute the workload, it introduces challenges when dealing with atomic transactions, as maintaining the integrity of transactions across multiple shards can be complex.
 
 Here's how sharding deals with atomic transactions:
@@ -203,4 +203,4 @@ Here's how sharding deals with atomic transactions:
 
 In summary, sharding can be a powerful technique for improving database scalability, but it introduces complexity when dealing with atomic transactions. To ensure atomicity in distributed transactions, protocols like 2PC are often used, but they come with their own challenges and trade-offs. Database administrators and developers must carefully design and manage the distributed transaction process to maintain data integrity and consistency in a sharded environment.
 
-```
+
