@@ -28,4 +28,20 @@ will make a post on twitter then the no. of writes will be quite large so in tha
 Therefore,twitter uses hybrid of both approaches.
 
 
+# LSM Trees
+
+So, we have 3 moving parts here : memtable, index table and SS Table
+
+<img width="1512" alt="Screenshot 2024-02-19 at 1 53 07 AM" src="https://github.com/iamskp99/Fundamentals-of-Database-Engineering/assets/42648568/5c6c2168-9bd5-48cd-b91a-5a2429bd8eb5">
+
+For quick writes, we will maintain a BST in our memory and we will flush our writes directly to our in-memory database.
+
+Now the question arises. What about fault tolerance ?
+We mantain a WAL for every transaction and persist it on the disk.
+(Note : )
+
+
+
+
+
 
