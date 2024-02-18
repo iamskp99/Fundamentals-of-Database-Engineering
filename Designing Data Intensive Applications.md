@@ -38,7 +38,6 @@ For quick writes, we will maintain a BST in our memory and we will flush our wri
 
 Now the question arises. What about fault tolerance ?
 We mantain a WAL for every transaction and persist it on the disk.
-(Note : )
 
 
 
