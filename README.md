@@ -277,6 +277,159 @@ Selection of a database depends on the following factors :
 
 *********************************************************************************************************************************
 
+### **Normalization**:
+Normalization is a database design technique used to minimize data redundancy and improve data integrity. It involves organizing data into tables in such a way that the dependencies among the data are well-structured. The process is divided into stages, known as normal forms (NFs), each of which addresses specific anomalies.
+
+---
+
+### **1NF (First Normal Form)**:
+A table is in **1NF** if:
+1. All columns contain atomic (indivisible) values.
+2. There are no repeating groups or arrays.
+
+#### **Example of 1NF:**
+Consider a table `Student_Courses` with students and the courses they are enrolled in.
+
+| Student_ID | Name   | Courses          |
+|------------|--------|------------------|
+| 1          | Alice  | Math, Physics    |
+| 2          | Bob    | Chemistry        |
+| 3          | Carol  | Math, Chemistry  |
+
+This is **not in 1NF** because the `Courses` column has multiple values (i.e., it's not atomic).
+
+**To convert into 1NF**, we need to make sure each field contains only a single value:
+
+| Student_ID | Name   | Course    |
+|------------|--------|-----------|
+| 1          | Alice  | Math      |
+| 1          | Alice  | Physics   |
+| 2          | Bob    | Chemistry |
+| 3          | Carol  | Math      |
+| 3          | Carol  | Chemistry |
+
+---
+
+### **2NF (Second Normal Form)**:
+A table is in **2NF** if:
+1. It is in **1NF**.
+2. All non-key attributes are fully dependent on the primary key (no partial dependency).
+
+#### **Example of 2NF**:
+Consider a table `Order_Details` that includes the following fields:
+
+| Order_ID | Product_ID | Product_Name | Unit_Price | Quantity |
+|----------|------------|--------------|------------|----------|
+| 101      | P01        | Pen          | 1.00       | 10       |
+| 101      | P02        | Pencil       | 0.50       | 20       |
+| 102      | P01        | Pen          | 1.00       | 5        |
+
+Here, `Order_ID + Product_ID` is the composite primary key. However, `Product_Name` and `Unit_Price` depend only on `Product_ID`, not on the full primary key. This causes **partial dependency**.
+
+**To convert into 2NF**, we remove the partial dependency by splitting the table into two:
+
+1. **Order_Details**:
+
+| Order_ID | Product_ID | Quantity |
+|----------|------------|----------|
+| 101      | P01        | 10       |
+| 101      | P02        | 20       |
+| 102      | P01        | 5        |
+
+2. **Product_Details**:
+
+| Product_ID | Product_Name | Unit_Price |
+|------------|--------------|------------|
+| P01        | Pen          | 1.00       |
+| P02        | Pencil       | 0.50       |
+
+Now, all non-key attributes in both tables depend on the full primary key.
+
+---
+
+### **3NF (Third Normal Form)**:
+A table is in **3NF** if:
+1. It is in **2NF**.
+2. All the attributes are only dependent on the primary key (no transitive dependency).
+
+#### **Example of 3NF**:
+Consider the `Employee` table:
+
+| Employee_ID | Employee_Name | Department_ID | Department_Name |
+|-------------|---------------|---------------|-----------------|
+| 1           | John          | D01           | HR              |
+| 2           | Alice         | D02           | IT              |
+| 3           | Bob           | D01           | HR              |
+
+Here, `Department_Name` depends on `Department_ID`, not directly on `Employee_ID`, which introduces **transitive dependency**.
+
+**To convert into 3NF**, we create a separate `Department` table:
+
+1. **Employee**:
+
+| Employee_ID | Employee_Name | Department_ID |
+|-------------|---------------|---------------|
+| 1           | John          | D01           |
+| 2           | Alice         | D02           |
+| 3           | Bob           | D01           |
+
+2. **Department**:
+
+| Department_ID | Department_Name |
+|---------------|-----------------|
+| D01           | HR              |
+| D02           | IT              |
+
+Now, there are no transitive dependencies in either table.
+
+---
+
+### **BCNF (Boyce-Codd Normal Form)**:
+A table is in **BCNF** if:
+1. It is in **3NF**.
+2. For every functional dependency \( A \to B \), \( A \) should be a superkey (i.e., \( A \) is either a candidate key or a part of a composite key).
+
+#### **Example of BCNF**:
+Consider the following table:
+
+| Student_ID | Course   | Instructor |
+|------------|----------|------------|
+| 1          | Math     | Dr. Smith  |
+| 1          | Physics  | Dr. Jones  |
+| 2          | Math     | Dr. Smith  |
+| 2          | Chemistry| Dr. White  |
+
+Here, both `Student_ID + Course` and `Course + Instructor` can act as candidate keys, but there is a functional dependency: `Course -> Instructor`. This violates BCNF because `Course` is not a superkey.
+
+**To convert into BCNF**, we need to split the table:
+
+1. **Student_Courses**:
+
+| Student_ID | Course    |
+|------------|-----------|
+| 1          | Math      |
+| 1          | Physics   |
+| 2          | Math      |
+| 2          | Chemistry |
+
+2. **Course_Instructors**:
+
+| Course    | Instructor |
+|-----------|------------|
+| Math      | Dr. Smith  |
+| Physics   | Dr. Jones  |
+| Chemistry | Dr. White  |
+
+Now, both tables are in BCNF.
+
+---
+
+### **Summary**:
+- **1NF**: No repeating groups, atomic values.
+- **2NF**: No partial dependency (non-key attributes depend on the whole primary key).
+- **3NF**: No transitive dependency (non-key attributes depend directly on the primary key).
+- **BCNF**: Every functional dependency has a superkey on the left side.
+
 
 Yes, **BCNF (Boyce-Codd Normal Form)** is indeed quite similar to **3NF (Third Normal Form)**, but there is a subtle difference between the two. Both forms aim to remove undesirable dependencies in the database schema, but BCNF is a stricter version of 3NF. Let's break down the key differences:
 
