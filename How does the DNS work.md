@@ -34,3 +34,12 @@ This setup allows you to distribute incoming traffic between the two servers, pr
 
 In summary, the Auth NS can map a domain to multiple server IP addresses, and DNS Round Robin is one way to achieve basic load balancing between those servers.
 ```
+
+# DNS Records
+
+- The .com top level domain server contains Nameserver records , for example in the case of domain registered via Route 53 ,it will contain Auth Ns record of AWS AuthNs Servers.
+- A and AAAA record. A record is maps to the ipv4 address of the device whereas AAAA record maps to the ipv6 record. The client decides if it is capable of ipv6 address.
+- CNAME records : 
+  ![Screenshot 2025-04-15 at 4 31 29 PM (2)](https://github.com/user-attachments/assets/5d886f87-9d9d-403c-b1fe-7c47f40c151e)
+
+
