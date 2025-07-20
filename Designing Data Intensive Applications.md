@@ -87,7 +87,75 @@ In normal times, you might get all 3. But **under partition**, one must go.
 Would you like a visual diagram or analogy (like pizza delivery across cities)?
 
 
+# ACID Properties with example
 
+Sure! Let’s break down **ACID properties** — the core principles of database transactions — with **simple definitions and an example**.
+
+---
+
+## 🔐 ACID = Atomicity, Consistency, Isolation, Durability
+
+### 1. **Atomicity** – *All or nothing*
+
+> A transaction is either **fully completed or not done at all**.
+
+* ✅ Example: Transfer ₹1000 from Account A to B.
+
+  * ₹1000 deducted from A ✔️
+  * ₹1000 added to B ✔️
+  * If B fails to receive money, A's balance is **not** deducted.
+
+---
+
+### 2. **Consistency** – *Valid state to valid state*
+
+> A transaction moves the database from one **valid state to another**, maintaining all rules (like constraints, triggers, etc).
+
+* ✅ Example:
+
+  * If total money in the system was ₹5000 before the transaction,
+  * It should still be ₹5000 after.
+  * No money should be **created or lost**.
+
+---
+
+### 3. **Isolation** – *Transactions don’t interfere*
+
+> Transactions run **independently**, even if run at the same time (concurrently).
+
+* ✅ Example:
+
+  * You and someone else both try to book the **last seat** on a flight.
+  * Isolation ensures **only one person** gets the seat — no double booking.
+
+---
+
+### 4. **Durability** – *Once done, always done*
+
+> Once a transaction is **committed**, the changes are **permanent**, even if there's a crash immediately after.
+
+* ✅ Example:
+
+  * You transfer money and get a confirmation.
+  * Power goes out.
+  * When the bank system restarts, the transfer **still shows as done**.
+
+---
+
+## 💡 Full Example: Bank Transfer
+
+Transaction: Transfer ₹1000 from Alice to Bob
+
+| Step | Property    | What it ensures                           |
+| ---- | ----------- | ----------------------------------------- |
+| 1    | Atomicity   | Both debit and credit happen, or neither. |
+| 2    | Consistency | Total balance remains the same.           |
+| 3    | Isolation   | No race conditions with other transfers.  |
+| 4    | Durability  | Even after crash, the transfer persists.  |
+
+---
+
+Let me know if you want a **real SQL-based example** or explanation with **distributed databases**.
 
 
 
