@@ -39,6 +39,54 @@ For quick writes, we will maintain a BST in our memory and we will flush our wri
 Now the question arises. What about fault tolerance ?
 We mantain a WAL for every transaction and persist it on the disk.
 
+# CAP theorem simplified
+
+The **CAP Theorem** is a fundamental principle in distributed systems. Here's a **simple explanation**:
+
+---
+
+### 🔺 What is CAP Theorem?
+
+It says that in a distributed system, you can only **guarantee two out of the following three**:
+
+| Letter | Meaning                                                                                                                         |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| **C**  | **Consistency** – Every read gets the latest write (or an error).                                                               |
+| **A**  | **Availability** – Every request gets a response (but it might not be the latest).                                              |
+| **P**  | **Partition Tolerance** – The system keeps working even if some network nodes can't talk to each other (i.e., network failure). |
+
+---
+
+### 🚦 Why can you only choose two?
+
+When there's a **network partition (P)** (i.e., nodes can’t communicate), a system must **choose** between:
+
+* **Consistency (C)**: Refuse to respond unless all nodes are in sync → some requests will fail → not available.
+* **Availability (A)**: Respond anyway → might return stale data → not consistent.
+
+So during a partition, **you can’t have both C and A**.
+
+---
+
+### 🧠 Real-World Examples
+
+| System                             | CAP Choice | Notes                                                                  |
+| ---------------------------------- | ---------- | ---------------------------------------------------------------------- |
+| **MongoDB (default)**              | AP         | Eventually consistent, but always responds.                            |
+| **Cassandra**                      | AP         | Fast writes, but reads may be slightly stale.                          |
+| **HBase / RDBMS with replication** | CP         | Strong consistency, but might sacrifice availability during partition. |
+
+---
+
+### 🧩 Summary Mnemonic
+
+> **Pick 2: C, A, P – not all 3 at once.**
+
+In normal times, you might get all 3. But **under partition**, one must go.
+
+Would you like a visual diagram or analogy (like pizza delivery across cities)?
+
+
 
 
 
