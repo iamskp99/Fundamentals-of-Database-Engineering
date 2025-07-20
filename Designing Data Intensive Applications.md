@@ -84,8 +84,6 @@ So during a partition, **you can’t have both C and A**.
 
 In normal times, you might get all 3. But **under partition**, one must go.
 
-Would you like a visual diagram or analogy (like pizza delivery across cities)?
-
 
 # ACID Properties with example
 
@@ -154,8 +152,6 @@ Transaction: Transfer ₹1000 from Alice to Bob
 | 4    | Durability  | Even after crash, the transfer persists.  |
 
 ---
-
-Let me know if you want a **real SQL-based example** or explanation with **distributed databases**.
 
 
 
