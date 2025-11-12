@@ -497,4 +497,87 @@ Now, both tables satisfy BCNF, as all determinants are superkeys in their respec
 
 In practice, BCNF is typically used when there are complex dependencies that 3NF doesn’t fully address.
 
+## Postgres views
+
+Good question — and the short answer is:
+👉 **No, a materialized view does *not* necessarily contain all the data from the underlying tables.**
+
+It only contains the **result of the query** used to create it.
+
+Let’s break that down clearly 👇
+
+---
+
+### 🧩 **What a Materialized View Actually Stores**
+
+When you create a materialized view:
+
+```sql
+CREATE MATERIALIZED VIEW dept_summary AS
+SELECT department_id, COUNT(*) AS emp_count
+FROM employees
+GROUP BY department_id;
+```
+
+* It **runs that query once**, right then.
+* It **stores the result** (a physical snapshot of that query) in the database as a real table-like object.
+* It does **not** store all columns or all rows from the `employees` table — only whatever that query selects.
+
+So if `employees` has 100k rows and 10 columns, but your view aggregates by department into just 10 rows and 2 columns — that’s all the materialized view contains.
+
+---
+
+### 🕓 **What Happens When Data Changes**
+
+* If the underlying table (`employees`) changes, the materialized view **does not auto-update**.
+* You must manually refresh it:
+
+  ```sql
+  REFRESH MATERIALIZED VIEW dept_summary;
+  ```
+* This re-runs the query and replaces the stored data with the latest snapshot.
+
+---
+
+### 🧠 **Think of it Like**
+
+A **cached copy of a query result** — optimized for performance, but **not automatically synchronized** with the source data.
+
+---
+
+### ⚡ Example
+
+```sql
+-- Base table
+CREATE TABLE employees (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  department_id INT,
+  salary INT
+);
+
+-- Materialized view
+CREATE MATERIALIZED VIEW high_salary_summary AS
+SELECT department_id, COUNT(*) AS high_earners
+FROM employees
+WHERE salary > 100000
+GROUP BY department_id;
+```
+
+Now, `high_salary_summary` will only contain **departments and counts of employees with salary > 100000**, not all employee data.
+
+---
+
+✅ **Summary:**
+
+| Feature                | Explanation                               |
+| ---------------------- | ----------------------------------------- |
+| **Contains all data?** | ❌ No, only what the query defines         |
+| **Physical storage?**  | ✅ Yes (stores query result)               |
+| **Auto-updated?**      | ❌ No, needs `REFRESH MATERIALIZED VIEW`   |
+| **Main use**           | Improve performance for expensive queries |
+
+---
+
+
 
